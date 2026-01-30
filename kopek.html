@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Köpek Bilgisi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  text-align: center;
+  padding: 20px;
+}
+.card {
+  background: white;
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+h2 { margin-bottom: 5px; }
+p { color: #555; }
+button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn-whatsapp {
+  background: #25D366;
+  color: white;
+}
+.btn-call {
+  background: #007bff;
+  color: white;
+}
+.footer {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #888;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>🐶 Kayıp Köpek</h2>
+  <p>Bu köpek kaybolmuştur. Lütfen sahibine ulaşın.</p>
+
+  <button class="btn-whatsapp" onclick="sendLocation()">
+    📍 Konumu WhatsApp’tan Gönder
+  </button>
+
+  <button class="btn-call" onclick="callOwner()">
+    📞 Sahibini Ara
+  </button>
+
+  <p class="footer">Sahip Tel: <span id="phone">90XXXXXXXXXX</span></p>
+</div>
+
+<script>
+const PHONE = "90XXXXXXXXXX"; // BURAYA NUMARANI YAZ (905xxxxxxxxx)
+
+function sendLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      const msg = "Köpeğinizi buldum. Konumum: https://maps.google.com/?q=" + lat + "," + lon;
+      const url = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(msg);
+      window.open(url, "_blank");
+    }, function() {
+      alert("Konum alınamadı. Lütfen konum izni verin.");
+    });
+  } else {
+    alert("Tarayıcı konum özelliğini desteklemiyor.");
+  }
+}
+
+function callOwner() {
+  window.location.href = "tel:" + PHONE;
+}
+
+document.getElementById("phone").innerText = PHONE;
+</script>
+
+</body>
+</html>
