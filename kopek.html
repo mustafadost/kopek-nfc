@@ -2,32 +2,44 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Köpek Bilgisi</title>
+<title>Kayıp Köpek</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #f7f7f7;
-  text-align: center;
-  padding: 20px;
+  background: linear-gradient(135deg, #f2f2f2, #e0e0e0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
 }
 .card {
   background: white;
   max-width: 420px;
-  margin: auto;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  padding: 24px;
+  border-radius: 18px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+  text-align: center;
 }
-h2 { margin-bottom: 5px; }
-p { color: #555; }
+img {
+  width: 120px;
+}
+h2 {
+  margin: 10px 0 5px;
+}
+p {
+  color: #555;
+  font-size: 15px;
+}
 button {
   width: 100%;
-  margin-top: 10px;
-  padding: 14px;
+  margin-top: 12px;
+  padding: 15px;
   font-size: 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
 }
 .btn-whatsapp {
@@ -38,56 +50,78 @@ button {
   background: #007bff;
   color: white;
 }
-.footer {
+.note {
   margin-top: 12px;
   font-size: 13px;
-  color: #888;
+  color: #777;
+}
+.footer {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #aaa;
 }
 </style>
 </head>
 <body>
 
 <div class="card">
-  <h2>🐶 Kayıp Köpek</h2>
-  <p>Bu köpek kaybolmuştur. Lütfen sahibine ulaşın.</p>
+  <img src="https://cdn-icons-png.flaticon.com/512/194/194279.png" alt="Köpek">
+  <h2>Kayıp Köpek 🐶</h2>
+  <p>Bu köpek kaybolmuştur.<br>Lütfen sahibine ulaşın.</p>
 
   <button class="btn-whatsapp" onclick="sendLocation()">
     📍 Konumu WhatsApp’tan Gönder
   </button>
 
   <button class="btn-call" onclick="callOwner()">
-    📞 Sahibini Ara
+    📞 Sahibine Telefon Et
   </button>
 
-  <p class="footer">Sahip Tel: <span id="phone">905322819838</span></p>
+  <div class="note">
+    Konumunuz yalnızca sahibine gönderilir.
+  </div>
+
+  <div class="footer">
+    Sahip Tel: <span id="phone"></span>
+  </div>
 </div>
 
 <script>
-const PHONE = "905322819838"; // BURAYA NUMARANI YAZ (905322819838)
+const PHONE = "905322819838";
 
 function sendLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(pos) {
+  if (!navigator.geolocation) {
+    alert("Tarayıcınız konum özelliğini desteklemiyor.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
-      const msg = "Köpeğinizi buldum. Konumum: https://maps.google.com/?q=" + lat + "," + lon;
-      const url = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(msg);
+      const msg =
+        "Köpeğinizi buldum 🐶📍\nKonumum: https://maps.google.com/?q=" +
+        lat + "," + lon;
+
+      const url =
+        "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(msg);
+
       window.open(url, "_blank");
-    }, function() {
+    },
+    function() {
       alert("Konum alınamadı. Lütfen konum izni verin.");
-    });
-  } else {
-    alert("Tarayıcı konum özelliğini desteklemiyor.");
-  }
+    }
+  );
 }
 
 function callOwner() {
   window.location.href = "tel:" + PHONE;
 }
 
-document.getElementById("phone").innerText = PHONE;
+document.getElementById("phone").innerText = "+90 532 281 98 38";
 </script>
 
 </body>
-
 </html>
+
+
